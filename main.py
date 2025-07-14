@@ -1,12 +1,12 @@
 from telegram import InlineKeyboardButton, InlineKeyboardMarkup, Update
 from telegram.ext import (
-    ApplicationBuilder, CallbackQueryHandler, CommandHandler,
-    ContextTypes, MessageHandler, ConversationHandler, filters
+    ApplicationBuilder, CommandHandler, ContextTypes, CallbackQueryHandler
 )
+import logging
 
-TOKEN = '7638033518:AAECvpZhCyRSqetmJbqE8jWHqkjbGHYwOYo'
+TOKEN = "7638033518:AAECvpZhCyRSqetmJbqE8jWHqkjbGHYwOYo"  # Замените на ваш реальный токен
 
-ASKING = 1
+logging.basicConfig(level=logging.INFO)
 
 questions = [
     "Какая самая неловкая ситуация произошла с тобой при незнакомцах?",
@@ -137,129 +137,122 @@ questions = [
     "Какая фраза когда-то спасла тебя?"
 ]
 
-product_descriptions = {
-    "game_1": ("❤️ Первая связь - романтическая игра, подходящая для пар.\nСостоит из 4 уровней: начнем?, прошлое, настоящее, будущее.\nДаря эту игру вы показываете партнеру, что ваши отношения значимы вам!", "https://www.instagram.com/p/CpNOEKoD2ZK/"),
-    "game_2": ("💛 Укрепление связей - уникальная игра для друзей, пар, семьи, коллег.\n3 уровня сближения. Прекрасный подарок!", "https://www.instagram.com/p/CpDX0zTjv0C/"),
-    "game_3": ("🩵 Связь с собой — игра-саморефлексия с 130+ вопросами и практиками. Для внутренней уверенности и покоя.", "https://www.instagram.com/p/C8rbgO-IWtC/"),
-    "game_4": ("🩵 Өзімен байланыс — қазақ тіліндегі өзін-өзі зерттеу ойыны. 130+ сұрақтар мен тәжірибелер.", "https://www.instagram.com/reel/C9HvTobseMB/"),
-    "book_1": ("🫂 Мама, как это было? — дневник воспоминаний с 320+ вопросами и 14 разделами. Сохраните тёплые моменты.", "https://www.instagram.com/p/DHTV9NRtYGT/"),
-    "book_2": ("👨 Папа, как это было? — 320+ вопросов и 14 разделов о жизни папы. Сохрани воспоминания навсегда.", "https://www.instagram.com/p/DK2REPBo5S7/"),
-}
-
-# Главное меню
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
-        [InlineKeyboardButton("🎁 Получить персональную скидку -15%", callback_data='discount')],
-        [InlineKeyboardButton("▶️ Приступить к игре в Дополнение", callback_data='play')],
-        [InlineKeyboardButton("📞 Связаться с Тех.поддержкой", url='https://wa.me/77755007264')],
-        [InlineKeyboardButton("📰 Новости Qalaisyn Games", callback_data='news')],
+        [InlineKeyboardButton("Получить скидку -15%", callback_data="discount")],
+        [InlineKeyboardButton("Приступить к игре в Дополнение", callback_data="play")],
+        [InlineKeyboardButton("Связаться с Тех.поддержкой", callback_data="support")],
+        [InlineKeyboardButton("Новости Qalaisyn Games", callback_data="news")],
     ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    await update.message.reply_text("Добро пожаловать в Qalaisyn!", reply_markup=reply_markup)
+    await update.message.reply_text(
+        "🎉 Добро пожаловать в Qalaisyn Games!",
+        reply_markup=InlineKeyboardMarkup(keyboard)
+    )
 
-# Раздел скидки
-async def discount(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    query = update.callback_query
-    await query.answer()
-
-    keyboard = [
-        [InlineKeyboardButton("🎲 Укрепление связей", callback_data='game_2')],
-        [InlineKeyboardButton("💞 Первая связь", callback_data='game_1')],
-        [InlineKeyboardButton("👤 Связь с собой", callback_data='game_3')],
-        [InlineKeyboardButton("🟦 Өзімен байланыс", callback_data='game_4')],
-        [InlineKeyboardButton("👩 Мама, как это было?", callback_data='book_1')],
-        [InlineKeyboardButton("👨 Папа, как это было?", callback_data='book_2')],
-        [InlineKeyboardButton("🔙 Назад", callback_data='back')],
-    ]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    await query.message.reply_text("У нас сейчас в наличии 4 вида игр и 2 книги.\n\nПодскажите, на какой продукт хотели бы получить скидку лояльного клиента?", reply_markup=reply_markup)
-
-# Описание продукта + видео
-async def product_info(update: Update, context: ContextTypes.DEFAULT_TYPE):
+async def button(update: Update, context: ContextTypes.DEFAULT_TYPE):
     query = update.callback_query
     await query.answer()
     data = query.data
 
-    if data in product_descriptions:
-        text, video = product_descriptions[data]
-        keyboard = [
-            [InlineKeyboardButton("🎥 Я посмотрел обзор, хочу получить скидку", callback_data='get_discount')],
-            [InlineKeyboardButton("🔙 Назад", callback_data='discount')]
+    if data == "discount":
+        products = [
+            [InlineKeyboardButton("Укрепление связей", callback_data="game_1")],
+            [InlineKeyboardButton("Первая связь", callback_data="game_2")],
+            [InlineKeyboardButton("Связь с собой", callback_data="game_3")],
+            [InlineKeyboardButton("Өзімен байланыс", callback_data="game_4")],
+            [InlineKeyboardButton("Мама, как это было?", callback_data="book_1")],
+            [InlineKeyboardButton("Папа, как это было?", callback_data="book_2")],
+            [InlineKeyboardButton("Назад", callback_data="back_to_menu")],
         ]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        await query.message.reply_text(f"{text}\n\n⬇️ Смотрите видео обзор продукта:\n{video}", reply_markup=reply_markup)
+        await query.edit_message_text(
+            "У нас сейчас в наличии 4 вида игр и 2 книги. На какой продукт хотели бы получить скидку лояльного клиента?",
+            reply_markup=InlineKeyboardMarkup(products)
+        )
 
-# Получение скидки
-async def get_discount(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    query = update.callback_query
-    await query.answer()
-    keyboard = [[InlineKeyboardButton("ОТПРАВИТЬ СКРИНШОТ", url='https://www.instagram.com/qalaisyn.games/')]]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    await query.message.reply_text("Поздравляю! 🎉\n\nСкидка лояльного клиента получена: -15%\n\nОтправьте скрин этого сообщения в наш Instagram!", reply_markup=reply_markup)
+    elif data.startswith("game") or data.startswith("book"):
+        descriptions = {
+            "game_1": ("💛 Укрепление связей...", "https://www.instagram.com/p/CpDX0zTjv0C/"),
+            "game_2": ("❤️ Первая связь...", "https://www.instagram.com/p/CpNOEKoD2ZK/"),
+            "game_3": ("🩵 Связь с собой...", "https://www.instagram.com/p/C8rbgO-IWtC/"),
+            "game_4": ("🩵 Өзімен байланыс...", "https://www.instagram.com/reel/C9HvTobseMB/"),
+            "book_1": ("🫂 Мама, как это было...", "https://www.instagram.com/p/DHTV9NRtYGT/"),
+            "book_2": ("❤️ Папа, как это было...", "https://www.instagram.com/p/DK2REPBo5S7/")
+        }
+        desc, link = descriptions[data]
+        buttons = [
+            [InlineKeyboardButton("Смотреть видео-обзор", url=link)],
+            [InlineKeyboardButton("Я посмотрел обзор, хочу получить скидку", callback_data="final_discount")],
+            [InlineKeyboardButton("Назад", callback_data="discount")],
+        ]
+        await query.edit_message_text(desc, reply_markup=InlineKeyboardMarkup(buttons))
 
-# Новости
-async def news(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    query = update.callback_query
-    await query.answer()
-    keyboard = [[InlineKeyboardButton("Перейти в Instagram", url='https://www.instagram.com/qalaisyn.games/')]]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    text = "Все новости, отзывы и анонсы наших новых продуктов в социальных сетях!\n\nПодпишись, чтобы не пропустить!\n(Эксклюзивные предложения публикуем только в сториз)"
-    await query.message.reply_text(text, reply_markup=reply_markup)
+    elif data == "final_discount":
+        await query.edit_message_text(
+            "Поздравляю! 🎉\n\nСкидка лояльного клиента получена: -15%\n\nОтправьте скрин этого сообщения в наш Instagram!",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("ОТПРАВИТЬ СКРИНШОТ", url="https://www.instagram.com/qalaisyn.games/")],
+                [InlineKeyboardButton("Назад", callback_data="back_to_menu")]
+            ])
+        )
 
-# Игра в дополнение
-async def play(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    query = update.callback_query
-    await query.answer()
-    context.user_data['index'] = 0
-    text = f"1⃣ Вопрос\n💬 {questions[0]}"
-    keyboard = [[InlineKeyboardButton("🔙 Назад", callback_data='back')]]
-    reply_markup = InlineKeyboardMarkup(keyboard)
-    await query.message.reply_text(text, reply_markup=reply_markup)
-    return ASKING
+    elif data == "support":
+        await query.edit_message_text(
+            "Связаться с менеджером можно по WhatsApp:",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("Написать менеджеру", url="https://wa.me/77755007264")],
+                [InlineKeyboardButton("Назад", callback_data="back_to_menu")],
+            ])
+        )
 
-# Ответ и следующий вопрос
-async def handle_answer(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    index = context.user_data.get('index', 0) + 1
-    if index < len(questions):
-        context.user_data['index'] = index
-        text = f"💬 {questions[index]}"
-        keyboard = [[InlineKeyboardButton("🔙 Назад", callback_data='back')]]
-        reply_markup = InlineKeyboardMarkup(keyboard)
-        await update.message.reply_text(text, reply_markup=reply_markup)
-        return ASKING
-    else:
-        await update.message.reply_text("✨ Это был последний вопрос. Спасибо за игру!")
-        return ConversationHandler.END
+    elif data == "news":
+        await query.edit_message_text(
+            "Все новости, отзывы и анонсы наших новых продуктов в социальных сетях!\n\nПодпишись, чтобы не пропустить!\n(Эксклюзивные предложения публикуем только в сториз)",
+            reply_markup=InlineKeyboardMarkup([
+                [InlineKeyboardButton("Instagram Qalaisyn", url="https://www.instagram.com/qalaisyn.games/")],
+                [InlineKeyboardButton("Назад", callback_data="back_to_menu")],
+            ])
+        )
 
-# Назад
-async def back(update: Update, context: ContextTypes.DEFAULT_TYPE):
-    query = update.callback_query
-    await query.answer()
-    await start(query, context)
-    return ConversationHandler.END
+    elif data == "play":
+        context.user_data["q_index"] = 0
+        question = questions[0]
+        keyboard = [
+            [InlineKeyboardButton("Следующий вопрос", callback_data="next_q")],
+            [InlineKeyboardButton("Назад", callback_data="back_to_menu")],
+        ]
+        await query.edit_message_text(f"1⃣ Вопрос\n💬 {question}", reply_markup=InlineKeyboardMarkup(keyboard))
 
-# Запуск бота
-if __name__ == '__main__':
+    elif data == "next_q":
+        q_index = context.user_data.get("q_index", 0) + 1
+        if q_index < len(questions):
+            context.user_data["q_index"] = q_index
+            question = questions[q_index]
+            keyboard = [
+                [InlineKeyboardButton("Следующий вопрос", callback_data="next_q")],
+                [InlineKeyboardButton("Назад", callback_data="back_to_menu")],
+            ]
+            await query.edit_message_text(f"💬 {question}", reply_markup=InlineKeyboardMarkup(keyboard))
+        else:
+            await query.edit_message_text(
+                "🎉 Это был последний вопрос! Спасибо за игру.",
+                reply_markup=InlineKeyboardMarkup([
+                    [InlineKeyboardButton("Назад", callback_data="back_to_menu")]
+                ])
+            )
+
+    elif data == "back_to_menu":
+        keyboard = [
+            [InlineKeyboardButton("Получить скидку -15%", callback_data="discount")],
+            [InlineKeyboardButton("Приступить к игре в Дополнение", callback_data="play")],
+            [InlineKeyboardButton("Связаться с Тех.поддержкой", callback_data="support")],
+            [InlineKeyboardButton("Новости Qalaisyn Games", callback_data="news")],
+        ]
+        await query.edit_message_text("Вы вернулись в главное меню. Что вас интересует?",
+                                      reply_markup=InlineKeyboardMarkup(keyboard))
+
+if __name__ == "__main__":
     app = ApplicationBuilder().token(TOKEN).build()
-
-    conv_handler = ConversationHandler(
-        entry_points=[CallbackQueryHandler(play, pattern='^play$')],
-        states={
-            ASKING: [
-                MessageHandler(filters.TEXT & ~filters.COMMAND, handle_answer),
-                CallbackQueryHandler(back, pattern='^back$'),
-            ],
-        },
-        fallbacks=[],
-    )
-
-    app.add_handler(CommandHandler('start', start))
-    app.add_handler(conv_handler)
-    app.add_handler(CallbackQueryHandler(discount, pattern='^discount$'))
-    app.add_handler(CallbackQueryHandler(product_info, pattern='^game_1$|^game_2$|^game_3$|^game_4$|^book_1$|^book_2$'))
-    app.add_handler(CallbackQueryHandler(get_discount, pattern='^get_discount$'))
-    app.add_handler(CallbackQueryHandler(news, pattern='^news$'))
-    app.add_handler(CallbackQueryHandler(back, pattern='^back$'))
-
-    print("Бот запущен…")
+    app.add_handler(CommandHandler("start", start))
+    app.add_handler(CallbackQueryHandler(button))
+    print("Бот запущен...")
     app.run_polling()
