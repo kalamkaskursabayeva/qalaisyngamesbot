@@ -170,7 +170,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         [
             InlineKeyboardButton(
-                "🎁 Получить скидку -50% на новинку\n" "(только один раз)", callback_data="discount"
+                "🎁 🎁 -50% на новинку (1 раз)", callback_data="discount"
             )
         ],
         [
@@ -347,7 +347,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             [
                 [
                     InlineKeyboardButton(
-                        "🔗 Написать в WhatsApp", url="https://wa.me/77755007264?text=Хочу%20оформить%20заказ,%20промокод:%20Своим%20можно,%20я%20свой%20👣"
+                        "🔗 Написать в WhatsApp", url="https://wa.me/77755007264?text=Хочу%20оформить%20заказ,%20промокод:%20Своим%20можно,%20я%20свой"
                     )
                 ],
                 [
