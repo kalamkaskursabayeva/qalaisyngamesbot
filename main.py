@@ -243,13 +243,15 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "✔️ 14 разделов и 320+ глубоких вопросов, где вы узнаете всё о маме, начиная с её детства\n"
             "✔️ Раздел «Настоящее время» — узнаете, о чём мечтает мама сейчас 💭\n"
             "✔️ Место для фотографий важных моментов\n\n"
-            "Это не просто 🎁 , а возможность провести тёплое время вместе\n\n"
-            "⬇️ Смотрите видео обзор продукта:\n"
-            "https://www.instagram.com/p/DHTV9NRtYGT/"
+            "Это не просто 🎁 , а возможность провести тёплое время вместе\n"
         )
         reply_markup = InlineKeyboardMarkup(
             [
                 [
+                    InlineKeyboardButton(
+                        "🔗 Посмотреть видео обзор продукта", url="https://www.instagram.com/p/DHTV9NRtYGT/"
+                    )
+                ],[
                     InlineKeyboardButton(
                         "🛍️ Я посмотрел(а) обзор, хочу получить скидку",
                         callback_data="watched",
@@ -269,11 +271,14 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
            "✔️ «Қазіргі уақыт» бөлімі — анаңыздың бүгінгі армандары мен ойларын біле аласыз 💭\n"
            "✔️ Маңызды сәттерге арналған фотосуреттер қоюға орын\n\n"
            "Бұл жай ғана 🎁 емес, бірге жылы уақыт өткізу мүмкіндігі\n\n"
-           "⬇️ Өнімнің бейне шолуын қараңыз:\n"
-           "https://www.instagram.com/p/DHTV9NRtYGT/"
         )
         reply_markup = InlineKeyboardMarkup(
             [
+                [
+                    InlineKeyboardButton(
+                        "🔗 Посмотреть видео обзор продукта", url="https://www.instagram.com/reel/DYRv5K_MQxX/?igsh=MTVua3htdm1kNmw1cQ=="
+                    )
+                ],
                 [
                     InlineKeyboardButton(
                         "🛍️ Я посмотрел(а) обзор, хочу получить скидку",
@@ -293,11 +298,14 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "🖤 десятки душевных вечеров вместе\n"
             "🖤 сохраните память о папе — для ваших внуков 🫶🏻\n\n"
             "Это не просто книга — это знак внимания о том, что Папа вам важен 💔\n\n"
-            "⬇️ Смотрите видео обзор продукта:\n"
-            "https://www.instagram.com/p/DK2REPBo5S7/"
         )
         reply_markup = InlineKeyboardMarkup(
             [
+                [
+                    InlineKeyboardButton(
+                        "🔗 Посмотреть видео обзор продукта", url="https://www.instagram.com/p/DK2REPBo5S7/"
+                    )
+                ],
                 [
                     InlineKeyboardButton(
                         "🛍️ Я посмотрел(а) обзор, хочу получить скидку",
@@ -317,11 +325,14 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 "🖤 бірге өткізетін ондаған жылы кештер\n"
 "🖤 әке туралы естелікті сақтап қалу — болашақ ұрпақ үшін 🫶🏻\n\n"
 "Бұл жай ғана кітап емес — бұл әкенің сіз үшін маңызды екенін көрсететін белгі 💔\n\n"
-"⬇️ Өнімнің бейне шолуын қараңыз:\n"
-"https://www.instagram.com/p/DK2REPBo5S7/"
         )
         reply_markup = InlineKeyboardMarkup(
             [
+                [
+                    InlineKeyboardButton(
+                        "🔗 Посмотреть видео обзор продукта", url="https://www.instagram.com/p/DK2REPBo5S7/"
+                    )
+                ],
                 [
                     InlineKeyboardButton(
                         "🛍️ Я посмотрел(а) обзор, хочу получить скидку",
@@ -347,7 +358,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             [
                 [
                     InlineKeyboardButton(
-                        "🔗 Написать в WhatsApp", url="https://wa.me/77755007264?text=Хочу%20оформить%20заказ,%20промокод:%20Своим%20можно,%20я%20свой"
+                        "🔗 Написать в WhatsApp", url="https://wa.me/7776314650?text=Хочу%20оформить%20заказ,%20промокод:%20Своим%20можно,%20я%20свой"
                     )
                 ],
                 [
@@ -375,7 +386,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             [
                 [
                     InlineKeyboardButton(
-                        "🔗 Написать в WhatsApp", url="https://wa.me/77755007264"
+                        "🔗 Написать в WhatsApp", url="https://wa.me/7776314650"
                     )
                 ],
                 [
