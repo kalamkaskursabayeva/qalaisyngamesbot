@@ -602,12 +602,12 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             
             [
                 InlineKeyboardButton(
-                    "📘 Книга «Мама, как это было?»", callback_data="mom_book2"
+                    "📘 Книга «Мама, как это было?»", callback_data="mom"
                 )
             ],
             [
                 InlineKeyboardButton(
-                    "📙 Книга «Папа, как это было?»", callback_data="dad_book2"
+                    "📙 Книга «Папа, как это было?»", callback_data="dad"
                 )
             ],
         ]
@@ -615,7 +615,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup = InlineKeyboardMarkup(keyboard)
         await query.edit_message_text(text=text, reply_markup=reply_markup)
 
-        elif query.data == "mom_book2":
+        if query.data == "mom":
             text = (
                 "🫂 «Мама, как это было?» — дневник воспоминаний, который сохранит самые важные моменты и истории из жизни вашей мамы.\n"
                 "Книга хранит воспоминания лучше, чем мы, ведь они остаются навсегда ♾️\n\n"
@@ -640,7 +640,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             )
             await query.edit_message_text(text=text, reply_markup=reply_markup)
 
-        elif query.data == "dad_book2":
+        elif query.data == "dad":
             text = (
                 "📙 «Папа, как это было?» ❤️ — это уникальный шанс услышать истории отца, узнать о его трудностях и как он всё преодолевал.\n\n"
                 "О первых ошибках на работе, сложностях в жизни и о светлых моментах, о первых свиданиях с вашей мамой 🫶🏻\n\n"
