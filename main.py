@@ -157,7 +157,7 @@ async def back_to_start(update: Update, context: ContextTypes.DEFAULT_TYPE):
 # Команда /start
 async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     text = (
-        "🎉 Поздравляем с покупкой игры!\n"
+        "🎉 Поздравляем с покупкой игры!\n\n"
         "🥰 Верим, что вы отлично провели время играя в игру!\n\n"
         "Сейчас у вас в руках — ДОПОЛНЕНИЕ! Или наш способ сказать вам спасибо еще раз :)\n\n"
         "Внутри дополнения:\n"
@@ -170,7 +170,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         [
             InlineKeyboardButton(
-                "🎁 Получить скидку -50% на новинку (только один раз) ", callback_data="discount"
+                "🎁 Получить скидку -50% на новинку\n" "(только один раз)", callback_data="discount"
             )
         ],
         [
@@ -198,9 +198,9 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
     if query.data == "discount":
         text = (
-            "🎁 Уау! А вы уже видели?\n"
-            "У нас появились новые интерактивные книги для родителей ❤️\n"
-            "✨ Заполняя их, вы не только сближаетесь, но и укрепляете доверие в семье, сохраняете важные истории и воспоминания для будущих поколений.\n"
+            "🎁 Уау! А вы уже видели?\n\n"
+            "У нас появились новые интерактивные книги для родителей ❤️\n\n"
+            "✨ Заполняя их, вы не только сближаетесь, но и укрепляете доверие в семье, сохраняете важные истории и воспоминания для будущих поколений.\n\n"
             "📚 Доступны на двух языках:\n"
             "🇰🇿 Қазақша\n"
             "🇷🇺 Русский\n\n"
@@ -215,7 +215,17 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             ],
             [
                 InlineKeyboardButton(
+                    "📘 Книга «Анашым,бәрі қалай басталды?»", callback_data="ana_book"
+                )
+            ],
+            [
+                InlineKeyboardButton(
                     "📙 Книга «Папа, как это было?»", callback_data="dad_book"
+                )
+            ],
+            [
+                InlineKeyboardButton(
+                    "📘 Книга «Әкешім, бәрі қалай басталды?»", callback_data="papa_book"
                 )
             ],
         ]
@@ -236,6 +246,31 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
             "Это не просто 🎁 , а возможность провести тёплое время вместе\n\n"
             "⬇️ Смотрите видео обзор продукта:\n"
             "https://www.instagram.com/p/DHTV9NRtYGT/"
+        )
+        reply_markup = InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        "🛍️ Я посмотрел(а) обзор, хочу получить скидку",
+                        callback_data="watched",
+                    )
+                ],
+                [InlineKeyboardButton("🔙 Назад", callback_data="discount")],
+            ]
+        )
+        await query.edit_message_text(text=text, reply_markup=reply_markup)
+
+    elif query.data == "ana_book":
+        text = (
+            "🫂 «Анашым, бәрі қалай басталды?» — естеліктер күнделігі, анаңыздың өміріндегі ең маңызды сәттер мен оқиғаларды сақтауға арналған.\n"
+           "Бұл кітап естеліктерді бізден де жақсы сақтайды, себебі олар мәңгі қалады ♾️\n\n"
+           "📖 Ішінде не бар?\n"
+           "✔️ 14 бөлім және 320+ терең сұрақ, анаңыздың балалық шағынан бастап бәрін білуге мүмкіндік береді\n"
+           "✔️ «Қазіргі уақыт» бөлімі — анаңыздың бүгінгі армандары мен ойларын біле аласыз 💭\n"
+           "✔️ Маңызды сәттерге арналған фотосуреттер қоюға орын\n\n"
+           "Бұл жай ғана 🎁 емес, бірге жылы уақыт өткізу мүмкіндігі\n\n"
+           "⬇️ Өнімнің бейне шолуын қараңыз:\n"
+           "https://www.instagram.com/p/DHTV9NRtYGT/"
         )
         reply_markup = InlineKeyboardMarkup(
             [
@@ -274,18 +309,47 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         )
         await query.edit_message_text(text=text, reply_markup=reply_markup)
 
+    elif query.data == "papa_book":
+        text = (
+            "📙 «Әкешім, бәрі қалай басталды?» ❤️ — әкенің өмір жолын, оның қиындықтарын және бәрін қалай еңсергенін білуге берілген ерекше мүмкіндік.\n\n"
+"Жұмыстағы алғашқы қателіктер, өмірдегі қиын сәттер және жарқын естеліктер, анаңызбен алғашқы кездесулер 🫶🏻\n\n"
+"🖤 Әке өмірі туралы 320+ сұрақ және 14 бөлім\n"
+"🖤 бірге өткізетін ондаған жылы кештер\n"
+"🖤 әке туралы естелікті сақтап қалу — болашақ ұрпақ үшін 🫶🏻\n\n"
+"Бұл жай ғана кітап емес — бұл әкенің сіз үшін маңызды екенін көрсететін белгі 💔\n\n"
+"⬇️ Өнімнің бейне шолуын қараңыз:\n"
+"https://www.instagram.com/p/DK2REPBo5S7/"
+        )
+        reply_markup = InlineKeyboardMarkup(
+            [
+                [
+                    InlineKeyboardButton(
+                        "🛍️ Я посмотрел(а) обзор, хочу получить скидку",
+                        callback_data="watched",
+                    )
+                ],
+                [InlineKeyboardButton("🔙 Назад", callback_data="discount")],
+            ]
+        )
+        await query.edit_message_text(text=text, reply_markup=reply_markup)
+
     elif query.data == "watched":
         text = (
-            "🎉 Супер!\n"
+            "🎉 Супер!\n\n"
             "Сейчас для вас доступны специальные условия:\n"
             "📚 При покупке 1 книги — скидка 20%\n"
-            "📚📚 При покупке 2 книг (можно разные) — скидка 50% на вторую книгу\n"
-            "🎁 А если оформите заказ в течение первых суток после получения промокода, мы бесплатно добавим распечатку 1 фотографии в каждую книгу.\n"
+            "📚📚 При покупке 2 книг (можно разные) — скидка 50% на вторую книгу\n\n"
+            "🎁 Бонус! Оформите заказ сейчас и получите бесплатную распечатку А5 фотографии (1шт) в каждую книгу.\n\n"
             "✨ Ваш промокод:\n"
             "«Своим можно, я свой 👣»"
         )
         reply_markup = InlineKeyboardMarkup(
             [
+                [
+                    InlineKeyboardButton(
+                        "🔗 Написать в WhatsApp", url="https://wa.me/77755007264?text=Хочу%20оформить%20заказ,%20промокод:%20Своим%20можно,%20я%20свой%20👣"
+                    )
+                ],
                 [
                     InlineKeyboardButton(
                         "🔗 Написать в Instagram", url="https://ig.me/m/qalaisyn.games"
@@ -320,6 +384,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                          callback_data="back_to_start",
                     )
                 ],
+                
             ]
         )
         await query.edit_message_text(text=text, reply_markup=reply_markup)
