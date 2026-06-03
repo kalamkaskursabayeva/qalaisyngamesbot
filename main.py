@@ -170,7 +170,7 @@ async def start(update: Update, context: ContextTypes.DEFAULT_TYPE):
     keyboard = [
         [
             InlineKeyboardButton(
-                "🎁 🎁 -50% на новинку (1 раз)", callback_data="discount"
+                "😱🎁 -50% на новинку (1 раз)", callback_data="discount"
             )
         ],
         [
