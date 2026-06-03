@@ -233,7 +233,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
         reply_markup = InlineKeyboardMarkup(keyboard)
         await query.edit_message_text(text=text, reply_markup=reply_markup)
 
-   
+
 
     elif query.data == "mom_book":
         text = (
@@ -395,7 +395,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
                          callback_data="back_to_start",
                     )
                 ],
-                
+
             ]
         )
         await query.edit_message_text(text=text, reply_markup=reply_markup)
