@@ -445,7 +445,7 @@ async def button_handler(update: Update, context: ContextTypes.DEFAULT_TYPE):
 
 # Запуск приложения
 app = (
-    ApplicationBuilder().token("7638033518:AAECvpZhCyRSqetmJbqE8jWHqkjbGHYwOYo").build()
+    ApplicationBuilder().token("8891292250:AAG9TyRh_1v-xpbx_sGig6Yw_XaN6Xxmg9I").build()
 )
 app.add_handler(CommandHandler("start", start))
 app.add_handler(CallbackQueryHandler(button_handler))
